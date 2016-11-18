@@ -13,6 +13,7 @@ public let IAPControllerFetchedNotification = "IAPControllerFetchedNotification"
 public let IAPControllerPurchasedNotification = "IAPControllerPurchasedNotification"
 public let IAPControllerFailedNotification = "IAPControllerFailedNotification"
 public let IAPControllerRestoredNotification = "IAPControllerRestoredNotification"
+public let IAPControllerCancelledNotification = "IAPControllerCancelledNotification"
 
 open class IAPController: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
@@ -103,6 +104,8 @@ open class IAPController: NSObject, SKProductsRequestDelegate, SKPaymentTransact
         if let error = error ?? transaction?.error {
             if error._code != SKError.paymentCancelled.rawValue {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: IAPControllerFailedNotification), object: error)
+            } else {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: IAPControllerCancelledNotification), object: error)
             }
         }
     }
