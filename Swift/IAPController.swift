@@ -112,7 +112,7 @@ open class IAPController: NSObject, SKProductsRequestDelegate, SKPaymentTransact
     
     func purchasedTransaction(transaction: SKPaymentTransaction? = nil) {
         self.finishTransaction(transaction: transaction)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: IAPControllerPurchasedNotification), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: IAPControllerPurchasedNotification), object: ["productIdentifier": transaction?.payment.productIdentifier ?? ""])
     }
     
 }
